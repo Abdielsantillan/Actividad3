@@ -1,0 +1,3 @@
+Teclados    5
+Memorias    2
+Memorias    2

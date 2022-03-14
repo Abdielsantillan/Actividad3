@@ -1,0 +1,27 @@
+[
+    {
+        "Producto"  : "Memorias",
+        "Cantidad"  : 3000,
+        "Precio"    : 2
+    },
+    {
+        "Producto"  : "Ratones",
+        "Cantidad"  : 3000,
+        "Precio"    : 0.40
+    },
+    {
+        "Producto"  : "Teclados",
+        "Cantidad"  : 217,
+        "Precio"    : 10
+    },
+    {
+        "Producto"  : "Pantallas",
+        "Cantidad"  : 30,
+        "Precio"    : 40
+    },
+    {
+        "Producto"  : "Impresoras",
+        "Cantidad"  : 400,
+        "Precio"    : 1
+    }
+]

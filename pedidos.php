@@ -23,26 +23,9 @@
             <form  method="post">
                 <div class="contenedorC">
                     <h2 class="titulo">Bienvenido: <?php echo $_SESSION['nombre'];?></h2>
-                    <select name="Productos" class="Lista" id="producto">
+                    <select name="Productos" class="Lista" id="producto" >
                         <p>Seleccione un producto
-                    <option value="none" selected="selected">---- seleccione el producto ---</option>
-                    <?php 
-                        $fp = fopen('almacen.txt','r');
-                        if(!$fp){echo 'ERROR: No ha sido posible abrir el archivo. Revisa su nombre y sus permisos.';exit;};
-                        $lines = file('almacen.txt');
-                        $lineas = count($lines);
-                        
-                        $loop = 0;//contador de líneas
-                        while ($loop<$lineas) {//loop hasta que se llegue al final del archivo
-                            $loop++;
-                            $line = fgets($fp);
-                            $field[$loop] = explode (',', $line);
-                            $precio[]= $field[$loop][2]; 
-                            $id = 0;
-                            echo '<option  value="'.$field[$loop][0].'">'.$field[$loop][0].'</option>';
-                            $id++;
-                        }
-                        fclose($fp);?>
+                        <option value="none" selected="selected">---- seleccione el producto ---</option>
                         </p></select>
                         <input type="number" id="cantidad" class="input" name="cantidad"  placeholder="Ingresa la cantidad de productos a comprar" value=""/>
                 </div>
@@ -52,34 +35,47 @@
     </div>                   
 </body>
 <script>
+    var contenido = document.getElementById("producto");
+    var nombre = "<?php echo $Nombre;?>";
+    let p=[];
+    fetch("/almacen.json")
+        .then(response => {return response.json();})
+        .then(jsondata => {
+                let x = 0;
+                for (let index = 0; index < jsondata.length; index++) {
+                    p.push([jsondata[x].Producto , jsondata[x].Precio]);
+                    contenido.innerHTML +=` <option  value="${x}"> ${jsondata[x].Producto} </option>`;
+                    x++;
+                };
+
+            }
+        );
+    
     function EnviarDatos(){
-        //valores a optener
-        var cod = document.getElementById("producto").value;
+        //Varibles para obtener los elementos
         var cantidad =  document.getElementById("cantidad").value;
-        var precio = <?php echo $precio[2];?> ;
-        console.log(precio);
-        //Enviar parametros
-        var select = document.getElementById("producto"); /*Obtener el SELECT */
-        var valor = select.options[select .selectedIndex].value;
-        alert(valor);
-        var nombre = "<?php echo $Nombre;?>";
-        var parametros = {"Producto":cod,"Cantidad":cantidad,"Nombre":nombre};
+        var id  = document.getElementById("producto").value;
+        // variables que viene al seleccionar una option del select
+        var elementos = p[id];
+        var Producto = elementos[0];
+        var Precio = elementos[1];
+
+        console.log(Producto);
+        //Aqui se envian los parametros al ajax
+        var parametros = {"Producto":Producto,"Cantidad":cantidad,"Nombre":nombre};
         $.ajax({
             data:parametros,
             url:'addCart.php',
             type: 'post',
             beforeSend: function () {
-                $("#resultado").html("Procesando, espere por favor");
+                alert("Procesando, espere por favor");
             },
             success: function (response) {   
-                $("#resultado").html(response);
+                alert("Se a agregado al carrito exito");
             }
         });
-            /* Para obtener el texto 
-            var combo = document.getElementById("producto");
-            var selected = combo.options[combo.selectedIndex].text;
-            alert(selected);*/
-        }
+    }
+        
 </script>
 </script>
 </html>

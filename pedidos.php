@@ -8,11 +8,13 @@
     <title>Document</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
-<?php   
+<?php    
         session_start();
-        $Nombre = $_POST['nombre'];
-        $_SESSION["nombre"] = $Nombre;
-        $my_dir =str_replace(' ', '', $Nombre);
+        if (!isset($_SESSION['nombre'])) {
+            $Nombre = $_POST['nombre'];
+            $_SESSION["nombre"] = $Nombre;
+        }
+        $my_dir =str_replace(' ', '', $_SESSION["nombre"] );
         if(!is_dir($my_dir)){
             mkdir($my_dir);
         }       
@@ -31,6 +33,8 @@
                 </div>
             </form>
             <input type="submit" name="Entrar" class="boton2" onclick="EnviarDatos()" value="Enviar"> 
+            <button class="boton2" onclick="location.href='viewCart.php'">Ver carrito</button>
+            <button class="boton2" onclick="location.href='cerrarSession.php'">Cerrar session</button>
         </div> 
     </div>                   
 </body>
@@ -59,10 +63,11 @@
         var elementos = p[id];
         var Producto = elementos[0];
         var Precio = elementos[1];
-
-        console.log(Producto);
+        // Enviamos el costo total
+        var costoT = Precio * cantidad;
+       // console.log(costoT);
         //Aqui se envian los parametros al ajax
-        var parametros = {"Producto":Producto,"Cantidad":cantidad,"Nombre":nombre};
+        var parametros = {"Producto":Producto,"Cantidad":cantidad,"Nombre":nombre, "CostoT":costoT};
         $.ajax({
             data:parametros,
             url:'addCart.php',

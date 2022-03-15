@@ -14,6 +14,7 @@
 		<form action="pedidos.php" method="POST" >
             <div class="FormContenedor">
                 <input type="text" class="input" name="nombre" placeholder="Nombre" value=""/>
+               
             </div>
             <input type="submit" name="Entrar" class="boton" value="Enviar">
         </form>

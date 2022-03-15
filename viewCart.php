@@ -12,14 +12,17 @@
         <table>
             <thead>
                 <tr>
-                    <th>Producto</th><th>Cantidad</th>
+                    <th>Producto</th><th>Cantidad</th><th>Total a pagar</th>
                 </tr>
             </thead>
             <?php 
-                $fp = fopen('Abdiel/Abdiel.txt','r');
-
+                session_start();
+                $_SESSION["nombre"];
+                $Nombre=$_SESSION["nombre"];
+                $fp = fopen($Nombre.'/'.$Nombre.'.txt','r');
                 if (!$fp){echo 'ERROR: No ha sido posible abrir el archivo. Revisa su nombre y sus permisos.'; exit;};
-                $lines = file('Abdiel/Abdiel.txt');
+                $lines = file( $Nombre.'/'.$Nombre.'.txt');
+     
                 $lineas = count($lines);
                 $loop = 0; // contador de líneas
                 while ($loop<$lineas) { // loop hasta que se llegue al final del archivo
@@ -28,10 +31,15 @@
                     $field[$loop] = explode ('    ', $line);
                     $fp;  
                     echo ' <tr>
-                            <td>'.$field[$loop][0].'</td><td>'.$field[$loop][1].'</td>
+                            <td>'.$field[$loop][0].'</td><td>'.$field[$loop][1].'</td></td><td>$ '.$field[$loop][2].'</td>
                         </tr>';
                 } 
                 fclose($fp);?>
+                <tr>
+                    <td colspan="3">
+                        <button class="boton2" onclick="location.href='pedidos.php'">Regresar</button>
+                    </td>
+                </tr>
         </table>
     </div>
 </body>

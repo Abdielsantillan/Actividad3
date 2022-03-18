@@ -12,17 +12,21 @@
         <table>
             <thead>
                 <tr>
-                    <th>Producto</th><th>Cantidad</th><th>Total a pagar</th>
+                    <th>Producto</th><th>Cantidad</th><th>Precio</th>
                 </tr>
             </thead>
             <?php 
                 session_start();
                 $_SESSION["nombre"];
                 $Nombre=$_SESSION["nombre"];
-                $fp = fopen($Nombre.'/'.$Nombre.'.txt','r');
+
+                date_default_timezone_set('America/Mexico_City');
+                $now = date('d.m.y');
+                $archivo = $Nombre.$now.'.txt';
+                $fp = fopen($Nombre.'/'.$archivo,'r');
                 if (!$fp){echo 'ERROR: No ha sido posible abrir el archivo. Revisa su nombre y sus permisos.'; exit;};
-                $lines = file( $Nombre.'/'.$Nombre.'.txt');
-     
+                $lines = file( $Nombre.'/'.$archivo);
+                $pagar =0;
                 $lineas = count($lines);
                 $loop = 0; // contador de líneas
                 while ($loop<$lineas) { // loop hasta que se llegue al final del archivo
@@ -33,11 +37,15 @@
                     echo ' <tr>
                             <td>'.$field[$loop][0].'</td><td>'.$field[$loop][1].'</td></td><td>$ '.$field[$loop][2].'</td>
                         </tr>';
+                    $pagar = $pagar + $field[$loop][2];
                 } 
                 fclose($fp);?>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="2">
                         <button class="boton2" onclick="location.href='pedidos.php'">Regresar</button>
+                    </td>
+                    <td>
+                        <p>Total a pagar: <?php echo  $pagar;?></p>
                     </td>
                 </tr>
         </table>

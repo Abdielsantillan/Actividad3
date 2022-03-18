@@ -34,20 +34,20 @@
             </form>
             <input type="submit" name="Entrar" class="boton2" onclick="EnviarDatos()" value="Enviar"> 
             <button class="boton2" onclick="location.href='viewCart.php'">Ver carrito</button>
-            <button class="boton2" onclick="location.href='cerrarSession.php'">Cerrar session</button>
+            <button class="boton2" onclick="location.href='cerrarSessione.php'">Cerrar session</button>
         </div> 
     </div>                   
 </body>
 <script>
     var contenido = document.getElementById("producto");
-    var nombre = "<?php echo $Nombre;?>";
+    var nombre = "<?php echo $_SESSION["nombre"];?>";
     let p=[];
     fetch("/almacen.json")
         .then(response => {return response.json();})
         .then(jsondata => {
                 let x = 0;
                 for (let index = 0; index < jsondata.length; index++) {
-                    p.push([jsondata[x].Producto , jsondata[x].Precio]);
+                    p.push([jsondata[x].Producto , jsondata[x].Precio ,jsondata[x].Cantidad ]);
                     contenido.innerHTML +=` <option  value="${x}"> ${jsondata[x].Producto} </option>`;
                     x++;
                 };
@@ -56,18 +56,18 @@
         );
     
     function EnviarDatos(){
+        
         //Varibles para obtener los elementos
-        var cantidad =  document.getElementById("cantidad").value;
-        var id  = document.getElementById("producto").value;
+        var cantidad = document.getElementById("cantidad").value;
+        var id = document.getElementById("producto").value;
         // variables que viene al seleccionar una option del select
         var elementos = p[id];
         var Producto = elementos[0];
         var Precio = elementos[1];
+        var CantidadT = elementos[2];
         // Enviamos el costo total
         var costoT = Precio * cantidad;
-       // console.log(costoT);
-        //Aqui se envian los parametros al ajax
-        var parametros = {"Producto":Producto,"Cantidad":cantidad,"Nombre":nombre, "CostoT":costoT};
+        var parametros = {"Producto":Producto,"Cantidad":cantidad,"Nombre":nombre, "CostoT":costoT,"TProductos":CantidadT};
         $.ajax({
             data:parametros,
             url:'addCart.php',
@@ -77,6 +77,7 @@
             },
             success: function (response) {   
                 alert("Se a agregado al carrito exito");
+                window.location.reload();
             }
         });
     }

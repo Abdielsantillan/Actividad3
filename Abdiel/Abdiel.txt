@@ -1,3 +1,0 @@
-Memorias    5    10
-Teclados    5    50
-Impresoras    9    9

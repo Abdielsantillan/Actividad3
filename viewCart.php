@@ -12,14 +12,13 @@
         <table>
             <thead>
                 <tr>
-                    <th>Producto</th><th>Cantidad</th><th>Precio</th>
+                    <th>Producto</th><th>Cantidad</th><th>Precio</th><th> Agregar o Quitar</th>
                 </tr>
             </thead>
             <?php 
                 session_start();
                 $_SESSION["nombre"];
                 $Nombre=$_SESSION["nombre"];
-
                 date_default_timezone_set('America/Mexico_City');
                 $now = date('d.m.y');
                 $archivo = $Nombre.$now.'.txt';
@@ -35,20 +34,45 @@
                     $field[$loop] = explode ('    ', $line);
                     $fp;  
                     echo ' <tr>
-                            <td>'.$field[$loop][0].'</td><td>'.$field[$loop][1].'</td></td><td>$ '.$field[$loop][2].'</td>
-                        </tr>';
+                                <td>'.$field[$loop][0].'</td>
+                                <td><input id="'.$loop.'"type="text" value="'.$field[$loop][1].'" readonly></td>
+                                <td><input id="'.$loop.'"type="text" value="'.$field[$loop][2].'" readonly></td>
+                                <td><button onclick="EliminarProducto('.$loop.')" id="'.$loop.'">-</button>
+                                    <button onclick="AgregarProducto('.$loop.')" id="'.$loop.'">+</button>
+                                    
+                                </td>
+                            </tr>';
                     $pagar = $pagar + $field[$loop][2];
-                } 
-                fclose($fp);?>
+                 }fclose($fp);?>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="3">
                         <button class="boton2" onclick="location.href='pedidos.php'">Regresar</button>
+                        <button class="boton2" onclick="guardarCambios(<?php echo $loop?>)">Guardar</button>
                     </td>
                     <td>
                         <p>Total a pagar: <?php echo  $pagar;?></p>
                     </td>
                 </tr>
+            
         </table>
     </div>
 </body>
+<script type="text/javascript">
+    //Funcion que nos permite restar elementos de nuestro carrito
+    function EliminarProducto(id){
+        elemento = document.getElementById(id);
+        valor = elemento.value;
+        if(valor > 0){
+            valor = valor-1;
+            elemento.value =valor;
+        }
+    }
+    function AgregarProducto(id){
+        elemento = document.getElementById(id);
+        valor = elemento.value;        
+        valor = parseInt(valor)+1;
+        elemento.value =valor;    
+    }
+
+</script>
 </html>

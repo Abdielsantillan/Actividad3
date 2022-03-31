@@ -42,7 +42,7 @@
     var contenido = document.getElementById("producto");
     var nombre = "<?php echo $_SESSION["nombre"];?>";
     let p=[];
-    fetch("/almacen.json")
+    fetch("almacen.json")
         .then(response => {return response.json();})
         .then(jsondata => {
                 let x = 0;
@@ -56,7 +56,6 @@
         );
     
     function EnviarDatos(){
-        
         //Varibles para obtener los elementos
         var cantidad = document.getElementById("cantidad").value;
         var id = document.getElementById("producto").value;
@@ -77,7 +76,7 @@
             },
             success: function (response) {   
                 alert("Se a agregado al carrito exito");
-                window.location.reload();
+               // window.location.reload();
             }
         });
     }

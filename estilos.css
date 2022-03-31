@@ -61,11 +61,20 @@
     background-color: rgb(4, 132, 252);
     color: rgba(256,256,256,0.7);
     border:0;
+    text-align: center;
     border-radius: 15px;
     margin: 15px auto; 
     padding: 15px 45px;
-    width: 80%;
+    width: 40%;
     }
+    .boton3{
+        background-color: rgb(4, 132, 252);
+        color: rgba(256,256,256,0.7);
+        margin: 15px auto; 
+        padding: 15px 45px;
+        text-align: center;
+        width: 100%;
+        }    
 .usuario{
     margin-top: 20px;
     text-align: center;
@@ -119,4 +128,9 @@ tr:hover td{
 #main-container{
 	margin: 150px auto;
 	width: 600px;
+}
+.input{
+    width: 0x;
+    height: 0px;
+    size: 2px;
 }

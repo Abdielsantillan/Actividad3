@@ -1,0 +1,3 @@
+Ratones    4    1.6
+Teclados    6    60
+Impresoras    2    2

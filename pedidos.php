@@ -36,7 +36,8 @@
             <button class="boton2" onclick="location.href='viewCart.php'">Ver carrito</button>
             <button class="boton2" onclick="location.href='cerrarSessione.php'">Cerrar session</button>
         </div> 
-    </div>                   
+    </div>                
+    
 </body>
 <script>
     var contenido = document.getElementById("producto");
